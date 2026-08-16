@@ -19,20 +19,22 @@
   },
   {
     "name": "Reviewer Dashboard",
-    "url": "https://app.ratifia.com",
+    "url": "https://app.ratifia.com/sign-in",
     "icon": "https://icons.duckduckgo.com/ip3/app.ratifia.com.ico",
     "slug": "reviewer-dashboard",
-    "status": "down",
-    "uptime": "100.00%",
-    "uptimeDay": "100.00%",
-    "uptimeWeek": "100.00%",
-    "uptimeMonth": "100.00%",
-    "uptimeYear": "100.00%",
-    "time": 73,
-    "timeDay": 73,
-    "timeWeek": 73,
-    "timeMonth": 73,
-    "timeYear": 73,
-    "dailyMinutesDown": {}
+    "status": "up",
+    "uptime": "1.55%",
+    "uptimeDay": "1.55%",
+    "uptimeWeek": "1.55%",
+    "uptimeMonth": "1.55%",
+    "uptimeYear": "1.55%",
+    "time": 250,
+    "timeDay": 250,
+    "timeWeek": 250,
+    "timeMonth": 250,
+    "timeYear": 250,
+    "dailyMinutesDown": {
+      "2026-08-16": 15
+    }
   }
 ]
