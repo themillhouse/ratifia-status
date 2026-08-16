@@ -64,6 +64,23 @@ Nothing works until these are done:
 - [ ] **Alert routing** — wire an internal ops channel (see the commented `notifications` block). Route to an **internal** channel, never a customer-facing one.
 - [ ] **Prove an alert fires** — deliberately fail a check and confirm an incident issue opens and the alert lands.
 
+## Alerting
+
+Alerts go to **ntfy.sh** via Upptime's custom webhook, plus a GitHub incident issue opened and closed automatically per failure.
+
+**ntfy.sh, not the self-hosted ntfy — deliberately.** `ntfy.do.demo.thebuildmill.com` resolves to the same IP as `api.ratifia.com`: same load balancer, same cluster. Routing alerts through it would mean the alert channel dies with the thing it is reporting on, producing silence at exactly the moment the page matters. The alert path has to be as independent as the monitoring.
+
+Config lives entirely in encrypted repo secrets, so the topic is never committed:
+
+- `NOTIFICATION_CUSTOM_WEBHOOK` = `true`
+- `NOTIFICATION_CUSTOM_WEBHOOK_URL` = `https://ntfy.sh/<topic>?tpl=1&m={{.data.message}}&t=Ratifia%20PROD&p=high`
+
+**Why the `tpl=1` matters:** Upptime posts `{"data":{"message":"..."}}`, and ntfy would otherwise render that whole JSON blob as the notification text. ntfy's templating unwraps it into a clean message. Verified end to end.
+
+Stage uses a separate topic at `p=low`, so production alerts stay distinguishable on the phone.
+
+**On ntfy.sh the topic name is the access control** — anyone who knows it can read and publish. Treat it as a password: never commit it, and rotate by generating a new topic and updating the secret.
+
 ## Incident process
 
 See [`runbooks/incident.md`](runbooks/incident.md).
