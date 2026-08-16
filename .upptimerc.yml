@@ -1,31 +1,36 @@
-# Change these first
-owner: upptime # Your GitHub organization or username, where this repository lives
-repo: upptime # The name of this repository
+owner: themillhouse
+repo: ratifia-status
 
+# Components are user-facing capabilities, not internal services.
+# A component belongs here only if we can actually measure it — see OPERATIONS.md.
 sites:
-  - name: Google
-    url: https://www.google.com
-  - name: Wikipedia
-    url: https://en.wikipedia.org
-  - name: Hacker News
-    url: https://news.ycombinator.com
-  - name: Secret Site
-    url: $SECRET_SITE
+  # API + Postgres + config. Returns 503 (not 200) when the DB is unreachable
+  # or required config is missing, so a degraded control plane shows as down.
+  - name: Decision API
+    url: https://api.ratifia.com/health
+
+  # Where a reviewer reads their inbox and records a verdict.
+  - name: Reviewer Dashboard
+    url: https://app.ratifia.com
 
 status-website:
-  # Add your custom domain name, or remove the `cname` line if you don't have a domain
-  # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
-  cname: demo.upptime.js.org
-  # baseUrl: /your-repo-name
-  logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
-  name: Upptime
-  introTitle: "**Upptime** is the open-source uptime monitor and status page, powered entirely by GitHub."
-  introMessage: This is a sample status page which uses **real-time** data from our [GitHub repository](https://github.com/upptime/upptime). No server required — just GitHub Actions, Issues, and Pages. [**Get your own for free**](https://github.com/upptime/upptime)
+  cname: status.ratifia.com
+  name: Ratifia Status
+  introTitle: Ratifia Status
+  introMessage: Live availability for the Ratifia decision control plane. Checked every 5 minutes from GitHub Actions; history is public and append-only.
   navbar:
     - title: Status
       href: /
-    - title: GitHub
-      href: https://github.com/$OWNER/$REPO
+    - title: Ratifia
+      href: https://ratifia.com
 
-# Upptime also supports notifications, assigning issues, and more
-# See https://upptime.js.org/docs/configuration
+# Incident issues are opened in this repo — assign them so they are owned.
+assignees:
+  - Souvent22
+
+# Notifications: wire an internal ops channel before launch (FN-197 phase 1).
+# Upptime supports Slack/Discord/Telegram/email via repo secrets — see
+# https://upptime.js.org/docs/notifications
+# notifications:
+#   - type: discord
+#     webhook: $DISCORD_WEBHOOK_URL
