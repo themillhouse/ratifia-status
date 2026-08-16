@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Decision API",
+    "url": "https://api.ratifia.com/health",
+    "icon": "https://icons.duckduckgo.com/ip3/api.ratifia.com.ico",
+    "slug": "decision-api",
+    "status": "up",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
+    "time": 92,
+    "timeDay": 92,
+    "timeWeek": 92,
+    "timeMonth": 92,
+    "timeYear": 92,
+    "dailyMinutesDown": {}
+  },
+  {
+    "name": "Reviewer Dashboard",
+    "url": "https://app.ratifia.com",
+    "icon": "https://icons.duckduckgo.com/ip3/app.ratifia.com.ico",
+    "slug": "reviewer-dashboard",
+    "status": "down",
+    "uptime": "100.00%",
+    "uptimeDay": "100.00%",
+    "uptimeWeek": "100.00%",
+    "uptimeMonth": "100.00%",
+    "uptimeYear": "100.00%",
+    "time": 73,
+    "timeDay": 73,
+    "timeWeek": 73,
+    "timeMonth": 73,
+    "timeYear": 73,
+    "dailyMinutesDown": {}
+  }
+]
