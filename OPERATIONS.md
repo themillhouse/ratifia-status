@@ -22,8 +22,8 @@ Nothing sensitive lives here by design. The monitored URLs, the response history
 
 | Component | Check | Why it is a component |
 |---|---|---|
-| Decision API | `GET https://api.ratifia.com/health` | The engine-facing control plane. Verifies the API, Postgres connectivity, and required config; returns 503 rather than 200 when degraded. |
-| Reviewer Dashboard | `GET https://app.ratifia.com` | Where a human reads their inbox and records a verdict. |
+| Decision API |  `GET https://api.ratifia.com/health` | The engine-facing control plane. Verifies the API, Postgres connectivity, and required config; returns 503 rather than 200 when degraded. |
+| Reviewer Dashboard |  `GET https://app.ratifia.com/sign-in` | Where a human reads their inbox and records a verdict. |
 
 ## What is deliberately not monitored — and why that matters
 
@@ -39,6 +39,18 @@ A status page must never show a component it cannot actually measure. A green li
 
 Add a component here **only** when a real check backs it.
 
+## Why there are no authenticated probes here
+
+Deeper coverage is wanted, but it must not come from logging in on this side of the fence. This repo is public, its Actions run every 5 minutes, and an authenticated write probe would mean:
+
+- production credentials in a public repository's CI,
+- real decisions created in production on every tick — metered, quota-consuming, and firing real notifications at real approvers,
+- and cleanup logic that becomes its own failure mode.
+
+The better shape inverts it: **the server reports its own deep health, and the monitor stays unauthenticated.** `/health/delivery` and `/health/engine` (FN-198, FN-199) let the API introspect its own outbox state and answer with a status code. No credentials leave the cluster, no synthetic data lands in production, and the check here stays a plain unauthenticated GET.
+
+True end-to-end synthetics (create → decide → resume) belong in the existing E2E harness against stage, not on a public status page.
+
 ## Setup checklist
 
 Nothing works until these are done:
@@ -46,7 +58,7 @@ Nothing works until these are done:
 - [ ] **`GH_PAT` secret** — a personal access token with `repo` and `workflow` scopes, added as a repository secret. Upptime uses it to commit results and open incident issues.
 - [ ] **Enable GitHub Pages** — Settings → Pages, source `gh-pages` branch (created by the `site` workflow on first run).
 - [ ] **DNS** — `CNAME` for `status.ratifia.com` → `themillhouse.github.io`, then set the custom domain in Settings → Pages and enable Enforce HTTPS.
-- [ ] **Verify the checks pass** — the `Uptime CI` workflow should go green and write into `history/`. Confirm `app.ratifia.com` returns 2xx after any auth redirect; if the sign-in redirect breaks the check, pin `expectedStatusCodes` in `.upptimerc.yml`.
+- [ ] **Verify the checks pass** — the `Uptime CI` workflow should go green and write into `history/`. Both endpoints were confirmed returning 200 at setup time.
 - [ ] **Alert routing** — wire an internal ops channel (see the commented `notifications` block). Route to an **internal** channel, never a customer-facing one.
 - [ ] **Prove an alert fires** — deliberately fail a check and confirm an incident issue opens and the alert lands.
 

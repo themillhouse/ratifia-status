@@ -10,8 +10,19 @@ sites:
     url: https://api.ratifia.com/health
 
   # Where a reviewer reads their inbox and records a verdict.
+  #
+  # NOT the root: Clerk's auth.protect() answers a signed-out GET / with 404
+  # (x-clerk-auth-reason: protect-rewrite), so the root reads as permanently
+  # down even when the app is perfectly healthy.
+  #
+  # NOT /api/health either: that route is `Response.json({status:'ok'})` — it
+  # proves the Node process is alive and nothing else.
+  #
+  # /sign-in is the reviewer's real entry point and a genuinely rendered page,
+  # so it fails when a reviewer would actually be unable to get in.
   - name: Reviewer Dashboard
-    url: https://app.ratifia.com
+    url: https://app.ratifia.com/sign-in
+    maxResponseTime: 5000
 
 status-website:
   cname: status.ratifia.com
