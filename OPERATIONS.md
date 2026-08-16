@@ -55,7 +55,9 @@ True end-to-end synthetics (create → decide → resume) belong in the existing
 
 Nothing works until these are done:
 
-- [ ] **`GH_PAT` secret** — a personal access token with `repo` and `workflow` scopes, added as a repository secret. Upptime uses it to commit results and open incident issues.
+- [x] **No `GH_PAT` — deliberately.** Upptime's workflows all read `${{ secrets.GH_PAT || github.token }}`, so the PAT is optional and the ephemeral built-in `GITHUB_TOKEN` covers everything this repo needs: checks run, history commits, and incident issues open *and* close (verified — incident #1 was opened and closed by `github-actions[bot]`). The only step that truly requires a PAT is `setup.yml`'s "Update template", which rewrites workflow files.
+
+  So `Setup CI` will show as failed. That is expected and accepted: a long-lived PAT in a **public** repository is a standing credential with a large blast radius, and auto-updating the Upptime template is not worth it. Update the template manually when wanted.
 - [ ] **Enable GitHub Pages** — Settings → Pages, source `gh-pages` branch (created by the `site` workflow on first run).
 - [ ] **DNS** — `CNAME` for `status.ratifia.com` → `themillhouse.github.io`, then set the custom domain in Settings → Pages and enable Enforce HTTPS.
 - [ ] **Verify the checks pass** — the `Uptime CI` workflow should go green and write into `history/`. Both endpoints were confirmed returning 200 at setup time.
