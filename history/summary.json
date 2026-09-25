@@ -5,15 +5,15 @@
     "icon": "https://icons.duckduckgo.com/ip3/api.ratifia.com.ico",
     "slug": "decision-api",
     "status": "up",
-    "uptime": "99.61%",
+    "uptime": "99.62%",
     "uptimeDay": "100.00%",
     "uptimeWeek": "100.00%",
     "uptimeMonth": "99.49%",
-    "uptimeYear": "99.61%",
+    "uptimeYear": "99.62%",
     "time": 244,
     "timeDay": 283,
     "timeWeek": 246,
-    "timeMonth": 239,
+    "timeMonth": 242,
     "timeYear": 244,
     "dailyMinutesDown": {
       "2026-09-07": 223
@@ -33,7 +33,7 @@
     "time": 684,
     "timeDay": 1316,
     "timeWeek": 1197,
-    "timeMonth": 765,
+    "timeMonth": 774,
     "timeYear": 684,
     "dailyMinutesDown": {
       "2026-08-16": 15,
